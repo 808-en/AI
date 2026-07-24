@@ -1,1 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloxd Agent Blue</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f0f4f9;
+            --sidebar-bg: #e8eaed;
+            --surface-color: #ffffff;
+            --text-primary: #1f1f1f;
+            --text-secondary: #444746;
+            --accent-color: #0b57d0;
+            --border-color: #c7c7c7;
+            --border-radius-lg: 24px;
+            --border-radius-sm: 8px;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            padding: 20px 10px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        .brand {
+            padding: 0 15px 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-section {
+            margin-bottom: 20px;
+        }
+
+        .nav-section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            padding: 10px 15px;
+            font-weight: 600;
+        }
+
+        .nav-item {
+            padding: 12px 15px;
+            margin: 2px 0;
+            border-radius: var(--border-radius-lg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: var(--text-primary);
+            transition: background 0.2s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: #d3d6da;
+        }
+
+        .spacer {
+            flex-grow: 1;
+        }
+
+        /* Language Selector */
+        .lang-selector {
+            position: relative;
+            padding: 10px;
+        }
+
+        .lang-btn {
+            width: 100%;
+            padding: 10px 15px;
+            border: none;
+            background: transparent;
+            border-radius: var(--border-radius-lg);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+        
+        .lang-btn:hover {
+            background-color: #d3d6da;
+        }
+
+        .lang-dropdown {
+            display: none;
+            position: absolute;
+            bottom: 100%;
+            left: 10px;
+            width: 260px;
+            background: var(--surface-color);
+            border-radius: var(--border-radius-sm);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .lang-dropdown.show {
+            display: block;
+        }
+
+        .lang-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lang-option:hover {
+            background-color: var(--bg-color);
+        }
+
+        .pixel-flag {
+            font-family: 'Courier New', monospace; /* Fallback for pixelated look with emojis */
+            font-size: 1.2rem;
+            filter: contrast(1.2);
+        }
+
+        /* Main Chat Area */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: var(--surface-color);
+            border-radius: var(--border-radius-lg) 0 0 var(--border-radius-lg);
+            margin: 10px 0 10px 0;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.05);
+        }
+
+        .chat-header {
+            padding: 20px 30px;
+            font-size: 1.5rem;
+            font-weight: 500;
+            border-bottom: 1px solid var(--bg-color);
+        }
+
+        .chat-history {
+            flex-grow: 1;
+            padding: 30px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 15px 20px;
+            border-radius: var(--border-radius-lg);
+            line-height: 1.5;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+        }
+
+        .message.agent {
+            align-self: flex-start;
+            background-color: transparent;
+            color: var(--text-primary);
+            display: flex;
+            gap: 15px;
+        }
+
+        .input-area {
+            padding: 20px 30px;
+            background: var(--surface-color);
+        }
+
+        .input-box {
+            display: flex;
+            background-color: var(--bg-color);
+            border-radius: var(--border-radius-lg);
+            padding: 10px 20px;
+            align-items: center;
+        }
+
+        .input-box input {
+            flex-grow: 1;
+            border: none;
+            background: transparent;
+            padding: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .input-box button {
+            background: transparent;
+            border: none;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        /* Coding Environment (Hidden by default) */
+        .coding-env {
+            display: none; /* Toggled via JS */
+            width: 100%;
+            height: 100vh;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            flex-direction: row;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .editor-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .code-editor {
+            flex-grow: 1;
+            background: #1e1e1e;
+            color: #9cdcfe;
+            padding: 20px;
+            font-family: 'Consolas', monospace;
+            border: none;
+            outline: none;
+            resize: none;
+            font-size: 1rem;
+        }
+
+        .terminal {
+            height: 30%;
+            background: #000;
+            color: #4af626;
+            padding: 10px;
+            font-family: 'Consolas', monospace;
+            border-top: 1px solid #333;
+            overflow-y: auto;
+        }
+
+        .right-sidebar {
+            width: 350px;
+            background: #252526;
+            border-left: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            transition: width 0.3s;
+        }
+
+        .right-sidebar.collapsed {
+            width: 0;
+            overflow: hidden;
+            border-left: none;
+        }
+
+        .resources-tab {
+            padding: 15px;
+            border-bottom: 1px solid #333;
+            background: #2d2d30;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-code-env {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">
+            <i class="fa-solid fa-cube"></i> Bloxd Agent Blue
+        </div>
+        
+        <div class="nav-section">
+            <div class="nav-section-title">Tools</div>
+            <div class="nav-item active" onclick="switchMode('constructor')">
+                <i class="fa-solid fa-pen-nib"></i> Post Constructor
+            </div>
+            <div class="nav-item" onclick="switchMode('analyzer')">
+                <i class="fa-solid fa-magnifying-glass-chart"></i> Post Analyzer
+            </div>
+            <div class="nav-item" onclick="openCodingEnv()">
+                <i class="fa-solid fa-code"></i> Coding Agent
+            </div>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="lang-selector">
+            <button class="lang-btn" onclick="toggleLangDropdown()">
+                <i class="fa-solid fa-language"></i> <span id="current-lang">English</span>
+            </button>
+            <div class="lang-dropdown" id="lang-dropdown">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Chat Interface -->
+    <main class="main-content" id="main-chat">
+        <div class="chat-header" id="chat-title">
+            BloxdHub Post Constructor
+        </div>
+        <div class="chat-history" id="chat-history">
+            <div class="message agent">
+                <i class="fa-solid fa-robot" style="color: var(--accent-color); font-size: 1.5rem;"></i>
+                <div>Hello! I am Bloxd Agent Blue. How can I help you construct your BloxdHub post today?</div>
+            </div>
+        </div>
+        <div class="input-area">
+            <div class="input-box">
+                <input type="text" id="user-input" placeholder="Type your prompt here..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Coding Environment -->
+    <div class="coding-env" id="coding-env">
+        <button class="close-code-env" onclick="closeCodingEnv()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <div class="editor-container">
+            <textarea class="code-editor" placeholder="// Write your Bloxd.io scripts here..."></textarea>
+            <div class="terminal">
+                > Bloxd Agent Blue Terminal Initialized...<br>
+                > Ready for execution.<br>
+            </div>
+        </div>
+        <div class="right-sidebar" id="right-sidebar">
+            <div class="resources-tab">
+                <span><i class="fa-solid fa-book"></i> Agent & Resources</span>
+                <button onclick="toggleRightSidebar()" style="background:none;border:none;color:white;cursor:pointer;">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="chat-history" style="padding: 15px; font-size: 0.9rem;" id="code-chat-history">
+                <div class="message agent">
+                    I am ready to help you script. What are we building?
+                </div>
+            </div>
+             <div class="input-box" style="margin: 15px; background: #333;">
+                <input type="text" id="code-user-input" placeholder="Ask Agent..." style="color: white;" onkeypress="handleCodeKeyPress(event)">
+                <button onclick="sendCodeMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <!-- Toggle button for when sidebar is hidden -->
+        <button onclick="toggleRightSidebar()" id="show-sidebar-btn" style="display:none; position:absolute; right:10px; top:10px; background:#252526; border:1px solid #333; color:white; padding:10px; border-radius:5px; cursor:pointer;">
+            <i class="fa-solid fa-robot"></i>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
