@@ -1,0 +1,27 @@
+{
+  "agent_identity": "Bloxd Agent Blue",
+  "version": "1.0",
+  "core_knowledge": {
+    "platform": "Bloxd.io",
+    "features": ["Survival", "Peaceful", "Creative", "Bedwars", "Greenville", "BloxdHub"]
+  },
+  "presets": {
+    "constructor_tips": [
+      "Always start with a hook or bold claim to grab the reader's attention.",
+      "Use bullet points for lists of blocks, coordinates, or server rules.",
+      "Include tags like #Bedwars or #Survival to increase visibility on BloxdHub.",
+      "End with a clear Call to Action (e.g., 'Join my server at IP: XYZ')."
+    ],
+    "analyzer_metrics": [
+      "Readability: Is it too dense? Suggest breaking into paragraphs.",
+      "Engagement: Does it ask questions to prompt comments?",
+      "Relevance: Does it strictly relate to Bloxd.io gameplay, builds, or server hosting?",
+      "Formatting: Checks for proper use of bolding and headers."
+    ],
+    "coding_agent_resources": [
+      "Syntax: Uses standard JS-like logic adapted for Bloxd environment.",
+      "Terminal Commands: /give, /tp, /spawn, /setblock",
+      "Common Snippet: function onPlayerJoin(player) { ... }"
+    ]
+  }
+}
