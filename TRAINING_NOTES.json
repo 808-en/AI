@@ -1,27 +1,48 @@
 {
   "agent_identity": "Bloxd Agent Blue",
-  "version": "1.0",
-  "core_knowledge": {
-    "platform": "Bloxd.io",
-    "features": ["Survival", "Peaceful", "Creative", "Bedwars", "Greenville", "BloxdHub"]
-  },
-  "presets": {
-    "constructor_tips": [
-      "Always start with a hook or bold claim to grab the reader's attention.",
-      "Use bullet points for lists of blocks, coordinates, or server rules.",
-      "Include tags like #Bedwars or #Survival to increase visibility on BloxdHub.",
-      "End with a clear Call to Action (e.g., 'Join my server at IP: XYZ')."
-    ],
-    "analyzer_metrics": [
-      "Readability: Is it too dense? Suggest breaking into paragraphs.",
-      "Engagement: Does it ask questions to prompt comments?",
-      "Relevance: Does it strictly relate to Bloxd.io gameplay, builds, or server hosting?",
-      "Formatting: Checks for proper use of bolding and headers."
-    ],
-    "coding_agent_resources": [
-      "Syntax: Uses standard JS-like logic adapted for Bloxd environment.",
-      "Terminal Commands: /give, /tp, /spawn, /setblock",
-      "Common Snippet: function onPlayerJoin(player) { ... }"
-    ]
-  }
+  "version": "2.0",
+  "submissions_count": 40,
+  "submissions": [
+    {"id": 1, "category": "Survival", "keywords": ["wood", "start"], "content": "Punching wood is your first priority. Gather Plum wood or Pine wood to craft a workbench. From there, upgrade to wooden tools immediately."},
+    {"id": 2, "category": "Survival", "keywords": ["iron", "ore"], "content": "Iron ore spawns frequently below Y-level -15. You will need a stone pickaxe minimum to mine it successfully without losing the drop."},
+    {"id": 3, "category": "Survival", "keywords": ["diamond", "deep"], "content": "Diamonds are found deep underground, usually near bedrock. Use strip mining techniques and carry torches, as mobs can spawn in the dark."},
+    {"id": 4, "category": "Survival", "keywords": ["food", "hunger"], "content": "Apples drop from leaves, but farming wheat to make bread provides a more reliable food source. Keep your hunger bar full to regenerate health."},
+    {"id": 5, "category": "Survival", "keywords": ["moonstone", "chest"], "content": "Moonstone is highly valuable. Crafting a Moonstone Chest guarantees your items are safe from other players on multiplayer survival servers."},
+    {"id": 6, "category": "Survival", "keywords": ["bed", "respawn"], "content": "Crafting a bed requires 3 wool and 3 wooden planks. Sleeping in it sets your respawn point, which is crucial before exploring dangerous caves."},
+    {"id": 7, "category": "Survival", "keywords": ["armor", "defense"], "content": "Prioritize a chestplate first when crafting armor, as it provides the highest defense per material used. Gold armor breaks very quickly."},
+    {"id": 8, "category": "Survival", "keywords": ["farming", "water"], "content": "Water hydrates farmland up to 4 blocks away horizontally. You can build a 9x9 farm with a single water block in the exact center."},
+    {"id": 9, "category": "Survival", "keywords": ["pvp", "combat"], "content": "In survival PvP, critical hits are achieved by jumping and striking the opponent on your way down. This deals extra damage."},
+    {"id": 10, "category": "Survival", "keywords": ["nether", "obsidian"], "content": "Obsidian requires a diamond pickaxe to mine. It takes several seconds per block, so make sure the area is secure before mining."},
+    {"id": 11, "category": "Bedwars", "keywords": ["bed defense", "wool"], "content": "A basic bed defense starts with a layer of wool, followed by wood, and then blast-proof blocks like endstone if available. Always layer!"},
+    {"id": 12, "category": "Bedwars", "keywords": ["rushing", "bridge"], "content": "Speed bridging (sneaking at the edge and placing blocks quickly) is essential for rushing the first neighboring base before they gather resources."},
+    {"id": 13, "category": "Bedwars", "keywords": ["diamonds", "upgrade"], "content": "In Bedwars, prioritize the Sharpness upgrade first if your team is aggressive, or Protection if you are focusing on defending the bed."},
+    {"id": 14, "category": "Bedwars", "keywords": ["emeralds", "mid"], "content": "Controlling the middle island yields emeralds. Use these to buy diamond armor or ender pearls for clutch plays and safe escapes."},
+    {"id": 15, "category": "Bedwars", "keywords": ["tnt", "explosion"], "content": "TNT is perfect for blowing through wood and wool defenses. Place it slightly above the bed to maximize the blast radius downward."},
+    {"id": 16, "category": "Bedwars", "keywords": ["fireball", "knockback"], "content": "Fireballs can be used offensively to break bridges or defensively to fireball-jump across gaps when you have no blocks left."},
+    {"id": 17, "category": "Bedwars", "keywords": ["invisibility", "potion"], "content": "Before drinking an invisibility potion, remove your armor. Your nameplate vanishes, but floating armor will immediately give away your position."},
+    {"id": 18, "category": "Bedwars", "keywords": ["tracker", "compass"], "content": "Buy a tracker compass when beds are destroyed. It points to the nearest living enemy, preventing endless games of hide-and-seek."},
+    {"id": 19, "category": "Bedwars", "keywords": ["bow", "arrows"], "content": "Bows are excellent for holding the middle. A Punch bow can knock players off bridges easily, securing instant kills regardless of armor."},
+    {"id": 20, "category": "Bedwars", "keywords": ["teamwork", "split"], "content": "Assign roles: One player defends the bed and collects iron, one bridges to diamonds, and two rush the adjacent base. Coordination wins games."},
+    {"id": 21, "category": "Greenville", "keywords": ["money", "jobs"], "content": "To earn money quickly in Greenville, take up the Mining or Woodcutting jobs. Leveling up these skills increases your cash yield per action."},
+    {"id": 22, "category": "Greenville", "keywords": ["plot", "house"], "content": "Claim a plot early. You can type /plot claim to get started. Make sure you have enough money to pay the daily upkeep costs."},
+    {"id": 23, "category": "Greenville", "keywords": ["cars", "driving"], "content": "Vehicles are expensive but save massive amounts of travel time. Be careful not to park them in restricted zones or they may despawn."},
+    {"id": 24, "category": "Greenville", "keywords": ["shops", "sell"], "content": "Player-owned shops are a great way to make passive income. Sell raw materials to builders who are too lazy to mine for themselves."},
+    {"id": 25, "category": "Greenville", "keywords": ["roleplay", "community"], "content": "Greenville is heavily social. Using the chat properly and participating in town events or mayoral elections makes the game much more enjoyable."},
+    {"id": 26, "category": "Creative", "keywords": ["fly", "build"], "content": "Double-tap the jump key to toggle flight. Use the scroll wheel to quickly change your flight speed for detailing vs outlining massive structures."},
+    {"id": 27, "category": "Creative", "keywords": ["worldedit", "commands"], "content": "If you have owner permissions, use fill commands to clear large areas or create massive walls instantly instead of placing blocks by hand."},
+    {"id": 28, "category": "Creative", "keywords": ["color", "palette"], "content": "When building, stick to a strict 3-5 color palette. Using too many block types makes a build look chaotic and visually noisy."},
+    {"id": 29, "category": "Creative", "keywords": ["lighting", "shadows"], "content": "Hide light sources under slabs, leaves, or behind stairs. This keeps your build illuminated without exposing ugly torches everywhere."},
+    {"id": 30, "category": "Creative", "keywords": ["depth", "facade"], "content": "Never build flat walls. Add pillars, window sills, and overhangs to create depth and shadow, which drastically improves architectural design."},
+    {"id": 31, "category": "Social", "keywords": ["friends", "party"], "content": "Use the /party command to group up with friends. This ensures you are placed on the same team in minigames like Bedwars or Murder Mystery."},
+    {"id": 32, "category": "Social", "keywords": ["report", "toxic"], "content": "If someone is breaking terms of service, use the built-in report feature. The moderation team reviews chat logs associated with the report."},
+    {"id": 33, "category": "Social", "keywords": ["texture", "packs"], "content": "You can use custom texture packs in Bloxd.io by pasting an image URL into the graphics settings. This completely changes the game's aesthetic."},
+    {"id": 34, "category": "Social", "keywords": ["discord", "community"], "content": "Joining the official Bloxd.io Discord is the best way to find updates, submit bug reports, and advertise your custom worlds to a large audience."},
+    {"id": 35, "category": "Social", "keywords": ["bloxdhub", "post"], "content": "When posting on BloxdHub, always include a high-quality screenshot of your build or server. Visuals get 3x more clicks than text-only posts."},
+    
+    {"id": 36, "category": "Coding", "keywords": ["documentation", "api guide"], "content": "The Bloxd.io Code API allows world owners to run JavaScript via Code Blocks. It exposes the global `api` object. The best place to learn is the GitHub repo.", "links": ["[Bloxdy/code-api - Official Repository](https://github.com/Bloxdy/code-api)"]},
+    {"id": 37, "category": "Coding", "keywords": ["callbacks", "events"], "content": "To trigger code on events (like when a player joins or places a block), use callback functions. For example: `onPlayerJoin = (playerId) => { api.sendMessage(playerId, 'Welcome!') }`. Check the full callbacks list.", "links": ["[CALLBACKS.md documentation](https://github.com/Bloxdy/code-api/blob/main/CALLBACKS.md)"]},
+    {"id": 38, "category": "Coding", "keywords": ["health", "damage"], "content": "You can manipulate player stats using the API. To set a player's health, use `api.setHealth(playerId, 100)`. To check their current health before modifying it, use `api.getHealth(playerId)`. This is highly useful for custom RPG games.", "links": ["[Bloxd API Examples](https://github.com/Bloxdy/code-api)"]},
+    {"id": 39, "category": "Coding", "keywords": ["spawning", "blocks"], "content": "Need to manipulate the world via code? While direct block placement can be tricky, the API supports moving players and editing properties. Ensure you check `api.getPlayerIds()` to loop through all active entities.", "links": ["[Bloxdy/code-api Wiki](https://github.com/Bloxdy/code-api)"]},
+    {"id": 40, "category": "Coding", "keywords": ["messages", "broadcast"], "content": "To send a server-wide announcement through your scripts, use `api.broadcastMessage('Arena starting!', { color: 'red' })`. This prints the colored text to every player's chat box, perfect for minigame timers.", "links": ["[GitHub - Broadcast API](https://github.com/Bloxdy/code-api)"]}
+  ]
 }
