@@ -7,6 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
+            /* Light Mode Defaults */
             --bg-color: #f0f4f9;
             --sidebar-bg: #e8eaed;
             --surface-color: #ffffff;
@@ -16,6 +17,18 @@
             --border-color: #c7c7c7;
             --border-radius-lg: 24px;
             --border-radius-sm: 8px;
+            --input-bg: #f0f4f9;
+        }
+
+        /* Dark Mode Theme */
+        body.dark-mode {
+            --bg-color: #131314;
+            --sidebar-bg: #1e1f22;
+            --surface-color: #1e1f22;
+            --text-primary: #e3e3e3;
+            --text-secondary: #c4c7c5;
+            --border-color: #444746;
+            --input-bg: #282a2c;
         }
 
         * {
@@ -31,6 +44,7 @@
             display: flex;
             height: 100vh;
             overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         /* Sidebar Styles */
@@ -41,6 +55,7 @@
             display: flex;
             flex-direction: column;
             transition: all 0.3s ease;
+            z-index: 10;
         }
 
         .brand {
@@ -75,25 +90,32 @@
             gap: 15px;
             color: var(--text-primary);
             transition: background 0.2s;
+            font-weight: 500;
         }
 
         .nav-item:hover, .nav-item.active {
-            background-color: #d3d6da;
+            background-color: var(--bg-color);
+            color: var(--accent-color);
+        }
+        
+        .nav-item.active i {
+            color: var(--accent-color);
         }
 
         .spacer {
             flex-grow: 1;
         }
 
-        /* Language Selector */
-        .lang-selector {
-            position: relative;
+        .bottom-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
             padding: 10px;
         }
 
-        .lang-btn {
+        .action-btn {
             width: 100%;
-            padding: 10px 15px;
+            padding: 12px 15px;
             border: none;
             background: transparent;
             border-radius: var(--border-radius-lg);
@@ -102,21 +124,29 @@
             align-items: center;
             gap: 10px;
             font-size: 1rem;
+            color: var(--text-primary);
+            transition: background-color 0.2s;
         }
         
-        .lang-btn:hover {
-            background-color: #d3d6da;
+        .action-btn:hover {
+            background-color: var(--bg-color);
+        }
+
+        /* Language Selector */
+        .lang-selector {
+            position: relative;
         }
 
         .lang-dropdown {
             display: none;
             position: absolute;
             bottom: 100%;
-            left: 10px;
+            left: 0;
             width: 260px;
             background: var(--surface-color);
+            border: 1px solid var(--border-color);
             border-radius: var(--border-radius-sm);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
             max-height: 300px;
             overflow-y: auto;
             z-index: 100;
@@ -132,16 +162,11 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            color: var(--text-primary);
         }
 
         .lang-option:hover {
             background-color: var(--bg-color);
-        }
-
-        .pixel-flag {
-            font-family: 'Courier New', monospace; /* Fallback for pixelated look with emojis */
-            font-size: 1.2rem;
-            filter: contrast(1.2);
         }
 
         /* Main Chat Area */
@@ -154,6 +179,7 @@
             border-radius: var(--border-radius-lg) 0 0 var(--border-radius-lg);
             margin: 10px 0 10px 0;
             box-shadow: -2px 0 10px rgba(0,0,0,0.05);
+            transition: background-color 0.3s;
         }
 
         .chat-header {
@@ -161,6 +187,7 @@
             font-size: 1.5rem;
             font-weight: 500;
             border-bottom: 1px solid var(--bg-color);
+            color: var(--text-primary);
         }
 
         .chat-history {
@@ -173,16 +200,18 @@
         }
 
         .message {
-            max-width: 80%;
+            max-width: 85%;
             padding: 15px 20px;
             border-radius: var(--border-radius-lg);
             line-height: 1.5;
+            word-wrap: break-word;
         }
 
         .message.user {
             align-self: flex-end;
-            background-color: var(--bg-color);
+            background-color: var(--input-bg);
             color: var(--text-primary);
+            border-bottom-right-radius: 4px;
         }
 
         .message.agent {
@@ -193,14 +222,24 @@
             gap: 15px;
         }
 
+        .message.agent a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        .message.agent a:hover {
+            text-decoration: underline;
+        }
+
         .input-area {
             padding: 20px 30px;
             background: var(--surface-color);
+            border-radius: 0 0 0 var(--border-radius-lg);
         }
 
         .input-box {
             display: flex;
-            background-color: var(--bg-color);
+            background-color: var(--input-bg);
             border-radius: var(--border-radius-lg);
             padding: 10px 20px;
             align-items: center;
@@ -213,6 +252,7 @@
             padding: 10px;
             font-size: 1rem;
             outline: none;
+            color: var(--text-primary);
         }
 
         .input-box button {
@@ -222,11 +262,17 @@
             font-size: 1.2rem;
             cursor: pointer;
             padding: 10px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+        
+        .input-box button:hover {
+            background-color: var(--surface-color);
         }
 
-        /* Coding Environment (Hidden by default) */
+        /* Coding Environment */
         .coding-env {
-            display: none; /* Toggled via JS */
+            display: none;
             width: 100%;
             height: 100vh;
             background: #1e1e1e;
@@ -248,26 +294,26 @@
             flex-grow: 1;
             background: #1e1e1e;
             color: #9cdcfe;
-            padding: 20px;
-            font-family: 'Consolas', monospace;
+            padding: 40px 20px 20px 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
             border: none;
             outline: none;
             resize: none;
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
 
         .terminal {
             height: 30%;
-            background: #000;
+            background: #000000;
             color: #4af626;
-            padding: 10px;
+            padding: 15px;
             font-family: 'Consolas', monospace;
             border-top: 1px solid #333;
             overflow-y: auto;
         }
 
         .right-sidebar {
-            width: 350px;
+            width: 400px;
             background: #252526;
             border-left: 1px solid #333;
             display: flex;
@@ -288,6 +334,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: #fff;
         }
 
         .close-code-env {
@@ -297,11 +344,127 @@
             background: rgba(255,255,255,0.1);
             border: none;
             color: white;
-            padding: 10px;
+            padding: 8px 15px;
             border-radius: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .close-code-env:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Settings Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--surface-color);
+            padding: 30px;
+            border-radius: var(--border-radius-lg);
+            width: 400px;
+            color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
             cursor: pointer;
         }
 
+        .setting-group {
+            margin-bottom: 20px;
+        }
+
+        .setting-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .theme-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        
+        .theme-btn.active {
+            border-color: var(--text-primary);
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .toggle-switch input {
+            display: none;
+        }
+
+        .slider {
+            width: 46px;
+            height: 24px;
+            background-color: #ccc;
+            border-radius: 24px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .slider::before {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: white;
+            top: 3px;
+            left: 3px;
+            transition: 0.3s;
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+
+        input:checked + .slider::before {
+            transform: translateX(22px);
+        }
+
+        /* Loading Spinner for Translations */
+        .typing-indicator {
+            display: inline-block;
+            font-style: italic;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 <body>
@@ -313,8 +476,11 @@
         </div>
         
         <div class="nav-section">
-            <div class="nav-section-title">Tools</div>
-            <div class="nav-item active" onclick="switchMode('constructor')">
+            <div class="nav-section-title">Agent Tools</div>
+            <div class="nav-item active" onclick="switchMode('general')">
+                <i class="fa-solid fa-lightbulb"></i> General Agent
+            </div>
+            <div class="nav-item" onclick="switchMode('constructor')">
                 <i class="fa-solid fa-pen-nib"></i> Post Constructor
             </div>
             <div class="nav-item" onclick="switchMode('analyzer')">
@@ -327,30 +493,35 @@
 
         <div class="spacer"></div>
 
-        <div class="lang-selector">
-            <button class="lang-btn" onclick="toggleLangDropdown()">
-                <i class="fa-solid fa-language"></i> <span id="current-lang">English</span>
-            </button>
-            <div class="lang-dropdown" id="lang-dropdown">
-                <!-- Populated by JS -->
+        <div class="bottom-actions">
+            <div class="lang-selector">
+                <button class="action-btn" onclick="toggleLangDropdown()">
+                    <i class="fa-solid fa-language"></i> <span id="current-lang">English</span>
+                </button>
+                <div class="lang-dropdown" id="lang-dropdown">
+                    <!-- Populated by JS -->
+                </div>
             </div>
+            <button class="action-btn" onclick="openSettings()">
+                <i class="fa-solid fa-gear"></i> Settings
+            </button>
         </div>
     </aside>
 
     <!-- Main Chat Interface -->
     <main class="main-content" id="main-chat">
         <div class="chat-header" id="chat-title">
-            BloxdHub Post Constructor
+            General Agent
         </div>
         <div class="chat-history" id="chat-history">
             <div class="message agent">
                 <i class="fa-solid fa-robot" style="color: var(--accent-color); font-size: 1.5rem;"></i>
-                <div>Hello! I am Bloxd Agent Blue. How can I help you construct your BloxdHub post today?</div>
+                <div id="welcome-msg">Hello! I am Bloxd Agent Blue. Ask me anything about Bloxd.io, survival strategies, or general mechanics!</div>
             </div>
         </div>
         <div class="input-area">
             <div class="input-box">
-                <input type="text" id="user-input" placeholder="Type your prompt here..." onkeypress="handleKeyPress(event)">
+                <input type="text" id="user-input" placeholder="Ask anything..." onkeypress="handleKeyPress(event)">
                 <button onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
             </div>
         </div>
@@ -358,35 +529,69 @@
 
     <!-- Coding Environment -->
     <div class="coding-env" id="coding-env">
-        <button class="close-code-env" onclick="closeCodingEnv()"><i class="fa-solid fa-arrow-left"></i> Back</button>
+        <button class="close-code-env" onclick="closeCodingEnv()"><i class="fa-solid fa-arrow-left"></i> Exit Coding Agent</button>
         <div class="editor-container">
-            <textarea class="code-editor" placeholder="// Write your Bloxd.io scripts here..."></textarea>
+            <textarea class="code-editor" placeholder="/* 
+  Write your Bloxd.io JavaScript code here.
+  Reference: https://github.com/Bloxdy/code-api 
+*/"></textarea>
             <div class="terminal">
                 > Bloxd Agent Blue Terminal Initialized...<br>
-                > Ready for execution.<br>
+                > API Connection: Ready<br>
+                > Waiting for commands...<br>
             </div>
         </div>
         <div class="right-sidebar" id="right-sidebar">
             <div class="resources-tab">
-                <span><i class="fa-solid fa-book"></i> Agent & Resources</span>
+                <span><i class="fa-solid fa-book"></i> Coding Assistant</span>
                 <button onclick="toggleRightSidebar()" style="background:none;border:none;color:white;cursor:pointer;">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <div class="chat-history" style="padding: 15px; font-size: 0.9rem;" id="code-chat-history">
+            <div class="chat-history" style="padding: 15px; font-size: 0.95rem; color:#fff;" id="code-chat-history">
                 <div class="message agent">
-                    I am ready to help you script. What are we building?
+                    <i class="fa-solid fa-robot" style="color: #4af626; font-size: 1.2rem;"></i>
+                    <div id="code-welcome-msg">I'm ready to help you script. What mechanics are we building today?</div>
                 </div>
             </div>
              <div class="input-box" style="margin: 15px; background: #333;">
-                <input type="text" id="code-user-input" placeholder="Ask Agent..." style="color: white;" onkeypress="handleCodeKeyPress(event)">
-                <button onclick="sendCodeMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+                <input type="text" id="code-user-input" placeholder="Ask for a script..." style="color: white;" onkeypress="handleCodeKeyPress(event)">
+                <button onclick="sendCodeMessage()"><i class="fa-solid fa-paper-plane" style="color:#4af626;"></i></button>
             </div>
         </div>
-        <!-- Toggle button for when sidebar is hidden -->
+        <!-- Toggle button for hidden sidebar -->
         <button onclick="toggleRightSidebar()" id="show-sidebar-btn" style="display:none; position:absolute; right:10px; top:10px; background:#252526; border:1px solid #333; color:white; padding:10px; border-radius:5px; cursor:pointer;">
             <i class="fa-solid fa-robot"></i>
         </button>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                Visual Settings
+                <button class="modal-close" onclick="closeSettings()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="setting-group">
+                <label>Dark Mode</label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-group">
+                <label>Color Theme</label>
+                <div class="theme-options">
+                    <button class="theme-btn active" style="background-color: #0b57d0;" onclick="setTheme('#0b57d0', this)"></button> <!-- Blue -->
+                    <button class="theme-btn" style="background-color: #8e24aa;" onclick="setTheme('#8e24aa', this)"></button> <!-- Purple -->
+                    <button class="theme-btn" style="background-color: #2e7d32;" onclick="setTheme('#2e7d32', this)"></button> <!-- Emerald -->
+                    <button class="theme-btn" style="background-color: #c62828;" onclick="setTheme('#c62828', this)"></button> <!-- Red/Sunset -->
+                    <button class="theme-btn" style="background-color: #000000;" onclick="setTheme('#000000', this)"></button> <!-- Dark Sapphire / Obsidian -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
