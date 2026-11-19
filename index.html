@@ -7,7 +7,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            /* Light Mode Defaults */
             --bg-color: #f0f4f9;
             --sidebar-bg: #e8eaed;
             --surface-color: #ffffff;
@@ -18,10 +17,11 @@
             --border-radius-lg: 24px;
             --border-radius-sm: 8px;
             --input-bg: #f0f4f9;
+            --font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
-        /* Dark Mode Theme */
-        body.dark-mode {
+        body.dark-mode,
+        body.device-dark {
             --bg-color: #131314;
             --sidebar-bg: #1e1f22;
             --surface-color: #1e1f22;
@@ -35,7 +35,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: var(--font-family);
         }
 
         body {
@@ -47,7 +47,51 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Sidebar Styles */
+        body.text-serif {
+            --font-family: Georgia, 'Times New Roman', serif;
+        }
+
+        body.text-mono {
+            --font-family: 'Courier New', monospace;
+        }
+
+        body.text-rounded {
+            --font-family: 'Trebuchet MS', Arial, sans-serif;
+        }
+
+        body.background-slate {
+            --bg-color: #e8edf5;
+            --sidebar-bg: #dce3ee;
+            --surface-color: #f7f9fc;
+            --input-bg: #e8edf5;
+        }
+
+        body.background-forest {
+            --bg-color: #e8f1ea;
+            --sidebar-bg: #d8e6dc;
+            --surface-color: #f7fbf8;
+            --input-bg: #e8f1ea;
+        }
+
+        body.background-dusk {
+            --bg-color: #f2eaf5;
+            --sidebar-bg: #e8dced;
+            --surface-color: #fbf7fc;
+            --input-bg: #f2eaf5;
+        }
+
+        body.dark-mode.background-slate,
+        body.device-dark.background-slate,
+        body.dark-mode.background-forest,
+        body.device-dark.background-forest,
+        body.dark-mode.background-dusk,
+        body.device-dark.background-dusk {
+            --bg-color: #131314;
+            --sidebar-bg: #1e1f22;
+            --surface-color: #1e1f22;
+            --input-bg: #282a2c;
+        }
+
         .sidebar {
             width: 280px;
             background-color: var(--sidebar-bg);
@@ -93,11 +137,12 @@
             font-weight: 500;
         }
 
-        .nav-item:hover, .nav-item.active {
+        .nav-item:hover,
+        .nav-item.active {
             background-color: var(--bg-color);
             color: var(--accent-color);
         }
-        
+
         .nav-item.active i {
             color: var(--accent-color);
         }
@@ -127,12 +172,11 @@
             color: var(--text-primary);
             transition: background-color 0.2s;
         }
-        
+
         .action-btn:hover {
             background-color: var(--bg-color);
         }
 
-        /* Language Selector */
         .lang-selector {
             position: relative;
         }
@@ -146,7 +190,7 @@
             background: var(--surface-color);
             border: 1px solid var(--border-color);
             border-radius: var(--border-radius-sm);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             max-height: 300px;
             overflow-y: auto;
             z-index: 100;
@@ -169,7 +213,6 @@
             background-color: var(--bg-color);
         }
 
-        /* Main Chat Area */
         .main-content {
             flex-grow: 1;
             display: flex;
@@ -177,8 +220,8 @@
             position: relative;
             background-color: var(--surface-color);
             border-radius: var(--border-radius-lg) 0 0 var(--border-radius-lg);
-            margin: 10px 0 10px 0;
-            box-shadow: -2px 0 10px rgba(0,0,0,0.05);
+            margin: 10px 0;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.05);
             transition: background-color 0.3s;
         }
 
@@ -204,7 +247,7 @@
             padding: 15px 20px;
             border-radius: var(--border-radius-lg);
             line-height: 1.5;
-            word-wrap: break-word;
+            overflow-wrap: anywhere;
         }
 
         .message.user {
@@ -226,9 +269,36 @@
             color: var(--accent-color);
             text-decoration: none;
         }
-        
+
         .message.agent a:hover {
             text-decoration: underline;
+        }
+
+        .agent-icon {
+            flex: 0 0 auto;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            margin-top: 3px;
+        }
+
+        .agent-icon-image {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            flex: 0 0 auto;
+        }
+
+        .message-attachment {
+            display: block;
+            margin-top: 8px;
+            max-width: min(320px, 100%);
+        }
+
+        .message-attachment img {
+            display: block;
+            max-width: 100%;
+            max-height: 240px;
+            border-radius: 10px;
         }
 
         .input-area {
@@ -239,14 +309,17 @@
 
         .input-box {
             display: flex;
+            gap: 4px;
             background-color: var(--input-bg);
             border-radius: var(--border-radius-lg);
-            padding: 10px 20px;
+            padding: 10px 14px;
             align-items: center;
+            min-width: 0;
         }
 
-        .input-box input {
-            flex-grow: 1;
+        .input-box input[type="text"] {
+            flex: 1;
+            min-width: 0;
             border: none;
             background: transparent;
             padding: 10px;
@@ -256,21 +329,79 @@
         }
 
         .input-box button {
+            flex: 0 0 auto;
             background: transparent;
             border: none;
             color: var(--accent-color);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             cursor: pointer;
             padding: 10px;
             border-radius: 50%;
             transition: background-color 0.2s;
         }
-        
+
         .input-box button:hover {
             background-color: var(--surface-color);
         }
 
-        /* Coding Environment */
+        .input-tool {
+            position: relative;
+            flex: 0 0 auto;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .attachment-preview {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            margin: 0 0 8px 8px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .attachment-preview.visible {
+            display: flex;
+        }
+
+        .attachment-preview button {
+            border: 0;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .model-control {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex: 0 0 auto;
+        }
+
+        .model-image {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+        }
+
+        .model-select,
+        .setting-select {
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: var(--surface-color);
+            color: var(--text-primary);
+            padding: 9px 10px;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .model-select {
+            max-width: 150px;
+        }
+
         .coding-env {
             display: none;
             width: 100%;
@@ -294,7 +425,7 @@
             flex-grow: 1;
             background: #1e1e1e;
             color: #9cdcfe;
-            padding: 40px 20px 20px 20px;
+            padding: 40px 20px 20px;
             font-family: 'Consolas', 'Courier New', monospace;
             border: none;
             outline: none;
@@ -341,7 +472,7 @@
             position: absolute;
             top: 10px;
             left: 10px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
             padding: 8px 15px;
@@ -349,29 +480,31 @@
             cursor: pointer;
             z-index: 1001;
         }
-        
+
         .close-code-env:hover {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
         }
 
-        /* Settings Modal */
         .modal-overlay {
             display: none;
             position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
             z-index: 2000;
             justify-content: center;
             align-items: center;
+            padding: 16px;
         }
 
         .modal-content {
             background: var(--surface-color);
             padding: 30px;
             border-radius: var(--border-radius-lg);
-            width: 400px;
+            width: min(420px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
             color: var(--text-primary);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .modal-header {
@@ -389,16 +522,21 @@
             color: var(--text-secondary);
             font-size: 1.2rem;
             cursor: pointer;
+            padding: 6px;
         }
 
         .setting-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .setting-group label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 500;
+        }
+
+        .setting-select {
+            width: 100%;
         }
 
         .theme-options {
@@ -413,81 +551,110 @@
             border: 2px solid transparent;
             cursor: pointer;
         }
-        
+
         .theme-btn.active {
             border-color: var(--text-primary);
         }
 
-        .toggle-switch {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-        
-        .toggle-switch input {
-            display: none;
-        }
-
-        .slider {
-            width: 46px;
-            height: 24px;
-            background-color: #ccc;
-            border-radius: 24px;
-            position: relative;
-            transition: 0.3s;
-        }
-
-        .slider::before {
-            content: "";
-            position: absolute;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background-color: white;
-            top: 3px;
-            left: 3px;
-            transition: 0.3s;
-        }
-
-        input:checked + .slider {
-            background-color: var(--accent-color);
-        }
-
-        input:checked + .slider::before {
-            transform: translateX(22px);
-        }
-
-        /* Loading Spinner for Translations */
         .typing-indicator {
             display: inline-block;
             font-style: italic;
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
+
+        .recording {
+            color: #c62828 !important;
+            background: rgba(198, 40, 40, 0.12) !important;
+        }
+
+        @media (max-width: 760px) {
+            .sidebar {
+                width: 76px;
+                padding: 16px 6px;
+            }
+
+            .brand {
+                justify-content: center;
+                padding: 0 0 20px;
+                font-size: 0;
+            }
+
+            .brand i {
+                font-size: 1.2rem;
+            }
+
+            .nav-section-title,
+            .nav-item span,
+            .action-btn span {
+                display: none;
+            }
+
+            .nav-item,
+            .action-btn {
+                justify-content: center;
+                padding: 12px 8px;
+            }
+
+            .lang-dropdown {
+                left: 0;
+                width: min(260px, calc(100vw - 90px));
+            }
+
+            .chat-header {
+                padding: 18px;
+                font-size: 1.2rem;
+            }
+
+            .chat-history {
+                padding: 18px;
+            }
+
+            .input-area {
+                padding: 12px;
+            }
+
+            .input-box {
+                padding: 6px;
+                gap: 0;
+            }
+
+            .input-box input[type="text"] {
+                padding: 8px 4px;
+                font-size: 0.95rem;
+            }
+
+            .model-image {
+                display: none;
+            }
+
+            .model-select {
+                max-width: 112px;
+                padding: 8px 4px;
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
-
-    <!-- Left Sidebar -->
     <aside class="sidebar">
         <div class="brand">
-            <i class="fa-solid fa-cube"></i> Bloxd Agent Blue
+            <i class="fa-solid fa-cube"></i><span>Bloxd Agent Blue</span>
         </div>
-        
+
         <div class="nav-section">
             <div class="nav-section-title">Agent Tools</div>
-            <div class="nav-item active" onclick="switchMode('general')">
-                <i class="fa-solid fa-lightbulb"></i> General Agent
+            <div class="nav-item active" onclick="switchMode('general', this)">
+                <i class="fa-solid fa-lightbulb"></i><span>General Agent</span>
             </div>
-            <div class="nav-item" onclick="switchMode('constructor')">
-                <i class="fa-solid fa-pen-nib"></i> Post Constructor
+            <div class="nav-item" onclick="switchMode('constructor', this)">
+                <i class="fa-solid fa-pen-nib"></i><span>Post Constructor</span>
             </div>
-            <div class="nav-item" onclick="switchMode('analyzer')">
-                <i class="fa-solid fa-magnifying-glass-chart"></i> Post Analyzer
+            <div class="nav-item" onclick="switchMode('analyzer', this)">
+                <i class="fa-solid fa-magnifying-glass-chart"></i><span>Post Analyzer</span>
             </div>
             <div class="nav-item" onclick="openCodingEnv()">
-                <i class="fa-solid fa-code"></i> Coding Agent
+                <i class="fa-solid fa-code"></i><span>Coding Agent</span>
             </div>
         </div>
 
@@ -495,100 +662,149 @@
 
         <div class="bottom-actions">
             <div class="lang-selector">
-                <button class="action-btn" onclick="toggleLangDropdown()">
-                    <i class="fa-solid fa-language"></i> <span id="current-lang">English</span>
+                <button class="action-btn" onclick="toggleLangDropdown()" aria-label="Select language">
+                    <i class="fa-solid fa-language"></i><span id="current-lang">English</span>
                 </button>
-                <div class="lang-dropdown" id="lang-dropdown">
-                    <!-- Populated by JS -->
-                </div>
+                <div class="lang-dropdown" id="lang-dropdown"></div>
             </div>
             <button class="action-btn" onclick="openSettings()">
-                <i class="fa-solid fa-gear"></i> Settings
+                <i class="fa-solid fa-gear"></i><span>Settings</span>
             </button>
         </div>
     </aside>
 
-    <!-- Main Chat Interface -->
     <main class="main-content" id="main-chat">
-        <div class="chat-header" id="chat-title">
-            General Agent
-        </div>
+        <div class="chat-header" id="chat-title">General Agent</div>
         <div class="chat-history" id="chat-history">
             <div class="message agent">
-                <i class="fa-solid fa-robot" style="color: var(--accent-color); font-size: 1.5rem;"></i>
+                <i class="fa-solid fa-robot agent-icon" data-agent-icon></i>
                 <div id="welcome-msg">Hello! I am Bloxd Agent Blue. Ask me anything about Bloxd.io, survival strategies, or general mechanics!</div>
             </div>
         </div>
         <div class="input-area">
+            <div class="attachment-preview" id="attachment-preview">
+                <i class="fa-solid fa-paperclip"></i>
+                <span id="attachment-name"></span>
+                <button type="button" onclick="clearAttachment()" aria-label="Remove attachment">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
             <div class="input-box">
-                <input type="text" id="user-input" placeholder="Ask anything..." onkeypress="handleKeyPress(event)">
-                <button onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+                <div class="input-tool">
+                    <input class="file-input" id="attachment-input" type="file" accept="image/*,.txt,.csv" onchange="handleAttachment(event)">
+                    <button type="button" onclick="document.getElementById('attachment-input').click()" aria-label="Attach one image, text file, or CSV file">
+                        <i class="fa-solid fa-paperclip"></i>
+                    </button>
+                </div>
+                <input type="text" id="user-input" placeholder="Ask anything..." onkeydown="handleKeyPress(event)">
+                <button type="button" id="microphone-button" onclick="toggleDictation()" aria-label="Start voice dictation">
+                    <i class="fa-solid fa-microphone"></i>
+                </button>
+                <div class="model-control">
+                    <img class="model-image" id="model-image" src="standard-model.png" alt="Standard model" onerror="this.style.display='none'">
+                    <select class="model-select" id="model-select" aria-label="Select model" onchange="selectModel(this.value)">
+                        <option value="standard">Standard</option>
+                        <option value="model-2">Model 2 (Work in progress)</option>
+                        <option value="model-3">Model 3 (Work in progress)</option>
+                    </select>
+                </div>
+                <button type="button" onclick="sendMessage()" aria-label="Send message">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
             </div>
         </div>
     </main>
 
-    <!-- Coding Environment -->
     <div class="coding-env" id="coding-env">
         <button class="close-code-env" onclick="closeCodingEnv()"><i class="fa-solid fa-arrow-left"></i> Exit Coding Agent</button>
         <div class="editor-container">
-            <textarea class="code-editor" placeholder="/* 
-  Write your Bloxd.io JavaScript code here.
-  Reference: https://github.com/Bloxdy/code-api 
-*/"></textarea>
+            <textarea class="code-editor" placeholder="Write your Bloxd.io JavaScript code here. Reference: https://github.com/Bloxdy/code-api"></textarea>
             <div class="terminal">
-                > Bloxd Agent Blue Terminal Initialized...<br>
-                > API Connection: Ready<br>
-                > Waiting for commands...<br>
+                &gt; Bloxd Agent Blue Terminal Initialized...<br>
+                &gt; API Connection: Ready<br>
+                &gt; Waiting for commands...<br>
             </div>
         </div>
         <div class="right-sidebar" id="right-sidebar">
             <div class="resources-tab">
                 <span><i class="fa-solid fa-book"></i> Coding Assistant</span>
-                <button onclick="toggleRightSidebar()" style="background:none;border:none;color:white;cursor:pointer;">
+                <button onclick="toggleRightSidebar()" aria-label="Hide coding assistant" style="background:none;border:none;color:white;cursor:pointer;">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <div class="chat-history" style="padding: 15px; font-size: 0.95rem; color:#fff;" id="code-chat-history">
+            <div class="chat-history" style="padding:15px;font-size:0.95rem;color:#fff;" id="code-chat-history">
                 <div class="message agent">
-                    <i class="fa-solid fa-robot" style="color: #4af626; font-size: 1.2rem;"></i>
+                    <i class="fa-solid fa-robot" style="color:#4af626;font-size:1.2rem;"></i>
                     <div id="code-welcome-msg">I'm ready to help you script. What mechanics are we building today?</div>
                 </div>
             </div>
-             <div class="input-box" style="margin: 15px; background: #333;">
-                <input type="text" id="code-user-input" placeholder="Ask for a script..." style="color: white;" onkeypress="handleCodeKeyPress(event)">
-                <button onclick="sendCodeMessage()"><i class="fa-solid fa-paper-plane" style="color:#4af626;"></i></button>
+            <div class="input-box" style="margin:15px;background:#333;">
+                <input type="text" id="code-user-input" placeholder="Ask for a script..." style="color:white;" onkeydown="handleCodeKeyPress(event)">
+                <button type="button" onclick="sendCodeMessage()" aria-label="Send coding prompt">
+                    <i class="fa-solid fa-paper-plane" style="color:#4af626;"></i>
+                </button>
             </div>
         </div>
-        <!-- Toggle button for hidden sidebar -->
-        <button onclick="toggleRightSidebar()" id="show-sidebar-btn" style="display:none; position:absolute; right:10px; top:10px; background:#252526; border:1px solid #333; color:white; padding:10px; border-radius:5px; cursor:pointer;">
+        <button onclick="toggleRightSidebar()" id="show-sidebar-btn" aria-label="Show coding assistant" style="display:none;position:absolute;right:10px;top:10px;background:#252526;border:1px solid #333;color:white;padding:10px;border-radius:5px;cursor:pointer;">
             <i class="fa-solid fa-robot"></i>
         </button>
     </div>
 
-    <!-- Settings Modal -->
     <div class="modal-overlay" id="settings-modal">
-        <div class="modal-content">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="settings-title">
             <div class="modal-header">
-                Visual Settings
-                <button class="modal-close" onclick="closeSettings()"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            
-            <div class="setting-group">
-                <label>Dark Mode</label>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
-                    <span class="slider"></span>
-                </label>
+                <span id="settings-title">Visual Settings</span>
+                <button class="modal-close" onclick="closeSettings()" aria-label="Close settings">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
             </div>
 
             <div class="setting-group">
-                <label>Color Theme</label>
+                <label for="display-mode">Appearance</label>
+                <select class="setting-select" id="display-mode" onchange="setDisplayMode(this.value)">
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="device">Device</option>
+                </select>
+            </div>
+
+            <div class="setting-group">
+                <label for="text-theme">Text Theme</label>
+                <select class="setting-select" id="text-theme" onchange="setTextTheme(this.value)">
+                    <option value="default">Default</option>
+                    <option value="serif">Serif</option>
+                    <option value="mono">Monospace</option>
+                    <option value="rounded">Rounded</option>
+                </select>
+            </div>
+
+            <div class="setting-group">
+                <label for="background-theme">Background Color Theme</label>
+                <select class="setting-select" id="background-theme" onchange="setBackgroundTheme(this.value)">
+                    <option value="default">Default</option>
+                    <option value="slate">Slate</option>
+                    <option value="forest">Forest</option>
+                    <option value="dusk">Dusk</option>
+                </select>
+            </div>
+
+            <div class="setting-group">
+                <label for="agent-icon-select">Agent Icon</label>
+                <select class="setting-select" id="agent-icon-select" onchange="setAgentIcon(this.value)">
+                    <option value="robot">Robot</option>
+                    <option value="computer">Computer</option>
+                    <option value="logo">Logo</option>
+                </select>
+            </div>
+
+            <div class="setting-group">
+                <label>Accent Color</label>
                 <div class="theme-options">
-                    <button class="theme-btn active" style="background-color: #0b57d0;" onclick="setTheme('#0b57d0', this)"></button> <!-- Blue -->
-                    <button class="theme-btn" style="background-color: #8e24aa;" onclick="setTheme('#8e24aa', this)"></button> <!-- Purple -->
-                    <button class="theme-btn" style="background-color: #2e7d32;" onclick="setTheme('#2e7d32', this)"></button> <!-- Emerald -->
-                    <button class="theme-btn" style="background-color: #c62828;" onclick="setTheme('#c62828', this)"></button> <!-- Red/Sunset -->
-                    <button class="theme-btn" style="background-color: #000000;" onclick="setTheme('#000000', this)"></button> <!-- Dark Sapphire / Obsidian -->
+                    <button class="theme-btn active" style="background-color:#0b57d0" onclick="setTheme('#0b57d0', this)" aria-label="Blue accent"></button>
+                    <button class="theme-btn" style="background-color:#8e24aa" onclick="setTheme('#8e24aa', this)" aria-label="Purple accent"></button>
+                    <button class="theme-btn" style="background-color:#2e7d32" onclick="setTheme('#2e7d32', this)" aria-label="Emerald accent"></button>
+                    <button class="theme-btn" style="background-color:#c62828" onclick="setTheme('#c62828', this)" aria-label="Red accent"></button>
+                    <button class="theme-btn" style="background-color:#000000" onclick="setTheme('#000000', this)" aria-label="Black accent"></button>
                 </div>
             </div>
         </div>
